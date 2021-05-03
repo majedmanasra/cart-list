@@ -7,7 +7,7 @@ import {
 
 let initialState = {
     data: [],
-    searchText: "",
+    searchText: ""
 };
 
 export default function cartItemsReducer(state = initialState, action) {
