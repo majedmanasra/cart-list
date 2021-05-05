@@ -22,16 +22,12 @@ export default function cartItemsReducer(state = initialState, action) {
                 
             case CART_ITEM_DECREMENT:
                 let itemForDecrement = draft.data.find(t => t.id === action.id);
-                if(itemForDecrement) {
-                    itemForDecrement.count--;
-                }
+                itemForDecrement.count--;
                 break;
 
             case CART_ITEM_INCREMENT:
                 let itemForIncrement = draft.data.find(t => t.id === action.id);
-                if(itemForIncrement) {
-                    itemForIncrement.count++;
-                }
+                itemForIncrement.count++;
                 break;
             case CART_ITEM_SEARCH_TEXT:
                 draft.searchText = action.searchText;
