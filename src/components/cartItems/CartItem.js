@@ -16,25 +16,23 @@ function CartItem({cartItem}) {
     }
 
     return (
-        <div>
-            <Card>
-                <Card.Body>
-                    <Row>
-                        <Col xs={12} md={2}>
-                            <Image thumbnail={true} src={cartItem.img} />
-                        </Col>
-                        <Col xs={12} md={7}>
-                            <Card.Title>{cartItem.name}</Card.Title>
-                            <Card.Text>{cartItem.description}</Card.Text>
-                        </Col>
-                        <Col xs={12} md={3}>
-                            <Counter incrementCallback={increment} decrementCallback={decrement} count={cartItem.count}/>
-                        </Col>
-                    </Row>
+        <Card>
+            <Card.Body>
+                <Row>
+                    <Col xs={12} md={2}>
+                        <Image thumbnail={true} src={cartItem.img} />
+                    </Col>
+                    <Col xs={12} md={7}>
+                        <Card.Title>{cartItem.name}</Card.Title>
+                        <Card.Text>{cartItem.description}</Card.Text>
+                    </Col>
+                    <Col xs={12} md={3}>
+                        <Counter incrementCallback={increment} decrementCallback={decrement} count={cartItem.count}/>
+                    </Col>
+                </Row>
 
-                </Card.Body>
-            </Card>
-        </div>
+            </Card.Body>
+        </Card>
     );
 }
 

@@ -1,9 +1,10 @@
 import {
     CART_ITEM_DECREMENT,
     CART_ITEM_INCREMENT,
-    CART_ITEM_LOAD_DATA,
+    CART_ITEM_ADD_ITEM,
     CART_ITEM_SEARCH_TEXT
 } from "../actions/cartItemCountActions";
+import produce from 'immer'
 
 let initialState = {
     data: [],
@@ -11,35 +12,33 @@ let initialState = {
 };
 
 export default function cartItemsReducer(state = initialState, action) {
+    return produce(state, draft => {
+        switch (action.type) {
+            case CART_ITEM_ADD_ITEM:
+                action.item.id = draft.data.length;
+                action.item.count = 0;
+                draft.data.unshift(action.item);
+                break;
+                
+            case CART_ITEM_DECREMENT:
+                let itemForDecrement = draft.data.find(t => t.id === action.id);
+                if(itemForDecrement) {
+                    itemForDecrement.count--;
+                }
+                break;
 
-    switch(action.type) {
-        case CART_ITEM_LOAD_DATA:
-            return { ...action.payload };
-        case CART_ITEM_DECREMENT:
-            // TODO: do with immutability-helper instead.
-            let indexForDecrement = state.data.findIndex(t => t.id === action.id);
-            let newArrayDecrement = [...state.data];
-            newArrayDecrement[indexForDecrement].count = newArrayDecrement[indexForDecrement].count - 1;
+            case CART_ITEM_INCREMENT:
+                let itemForIncrement = draft.data.find(t => t.id === action.id);
+                if(itemForIncrement) {
+                    itemForIncrement.count++;
+                }
+                break;
+            case CART_ITEM_SEARCH_TEXT:
+                draft.searchText = action.searchText;
+                break;
 
-            return {
-                ...state,
-                data: newArrayDecrement,
-            };
-        case CART_ITEM_INCREMENT:
-            // TODO: do with immutability-helper instead.
-            let indexForIncrement = state.data.findIndex(t => t.id === action.id);
-            let newArrayIncrement = [...state.data];
-            newArrayIncrement[indexForIncrement].count = newArrayIncrement[indexForIncrement].count + 1;
-
-            return {
-                ...state,
-                data: newArrayIncrement,
-            };
-        case CART_ITEM_SEARCH_TEXT:
-            return Object.assign({}, state, {
-            searchText: action.searchText
-        });
-        default:
-            return {...state };
-    }
+            default:
+                return draft;
+        }
+    });
 }
