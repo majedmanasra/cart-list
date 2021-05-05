@@ -32,7 +32,7 @@ function Cart() {
     }, []);
 
     const normalizedSearchText = cartItems.searchText.toLowerCase();
-    const filteredData = cartItems.data.filter(t => t.name.toLowerCase().indexOf(normalizedSearchText) > -1 || t.description.toLowerCase().indexOf(normalizedSearchText) > -1 || !normalizedSearchText);
+    const filteredData = cartItems.data.filter(t => t.name.toLowerCase().includes(normalizedSearchText) || t.description.toLowerCase().includes(normalizedSearchText) || !normalizedSearchText);
 
     return <Container>
         <CartItemHeader cartItems={cartItems} addRandomData={addRandomData}/>
