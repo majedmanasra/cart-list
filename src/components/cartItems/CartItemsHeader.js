@@ -1,4 +1,4 @@
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import SearchBar from "../uiComponents/SearchBar";
 import React, {useCallback} from "react";
 import {CART_ITEM_SEARCH_TEXT} from "../../actions/cartItemCountActions";
