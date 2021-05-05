@@ -7,7 +7,9 @@ import {
 import produce from 'immer'
 
 let initialState = {
-    data: [],
+    data: {
+        allItemIds: []
+    },
     searchText: ""
 };
 
@@ -15,24 +17,23 @@ export default function cartItemsReducer(state = initialState, action) {
     return produce(state, draft => {
         switch (action.type) {
             case CART_ITEM_ADD_ITEM:
-                action.item.id = draft.data.length;
-                action.item.count = 0;
-                draft.data.unshift(action.item);
+                let newId = draft.data.allItemIds.length;
+                draft.data[newId] = {
+                    id: newId,
+                    ...action.item,
+                    count: 0
+                };
+                draft.data.allItemIds.unshift(newId);
                 break;
                 
             case CART_ITEM_DECREMENT:
-                let itemForDecrement = draft.data.find(t => t.id === action.id);
-                if(itemForDecrement) {
-                    itemForDecrement.count--;
-                }
+                draft.data[action.id].count--;
                 break;
 
             case CART_ITEM_INCREMENT:
-                let itemForIncrement = draft.data.find(t => t.id === action.id);
-                if(itemForIncrement) {
-                    itemForIncrement.count++;
-                }
+                draft.data[action.id].count++;
                 break;
+
             case CART_ITEM_SEARCH_TEXT:
                 draft.searchText = action.searchText;
                 break;
